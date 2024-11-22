@@ -1,2 +1,2 @@
-go install github.com/YuanJey/initGoProject
+go install github.com/YuanJey/initGoProject\n
 initGoProject -name test
