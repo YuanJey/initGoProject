@@ -7,7 +7,7 @@ import (
 	"os/exec"
 )
 
-var dockerfile = "FROM golang:1.22-alpine AS builder\nENV CGO_ENABLED 0\nENV GOPROXY https://goproxy.cn,direct\nWORKDIR /app\nCOPY . .\nRUN go mod tidy\nWORKDIR /app/cmd/main\nRUN go build -o main .\n\n\nFROM alpine:latest\nWORKDIR /root/\nCOPY --from=builder /app/cmd/main/main .\nCOPY --from=builder /app/config/config.yaml .\nCOPY --from=builder /app/static/ ./static/\nEXPOSE 8000\nCMD [\"./main\"]"
+var dockerfile = "FROM golang:latest AS builder\nENV CGO_ENABLED 0\nENV GOPROXY https://goproxy.cn,direct\nWORKDIR /app\nCOPY . .\nRUN go mod tidy\nWORKDIR /app/cmd/main\nRUN go build -o main .\n\n\nFROM alpine:latest\nWORKDIR /root/\nCOPY --from=builder /app/cmd/main/main .\nCOPY --from=builder /app/config/config.yaml .\nEXPOSE 8000\nCMD [\"./main\"]"
 
 func main() {
 	var name string
@@ -16,7 +16,7 @@ func main() {
 	// 定义要创建的目录结构
 	directories := []string{
 		fmt.Sprintf("%s/cmd", name),
-		fmt.Sprintf("%s/cmd/api", name),
+		fmt.Sprintf("%s/cmd/main", name),
 		fmt.Sprintf("%s/internal", name),
 		fmt.Sprintf("%s/pkg", name),
 		fmt.Sprintf("%s/config", name),

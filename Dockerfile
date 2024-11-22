@@ -12,6 +12,5 @@ FROM alpine:latest
 WORKDIR /root/
 COPY --from=builder /app/cmd/main/main .
 COPY --from=builder /app/config/config.yaml .
-COPY --from=builder /app/static/ ./static/
 EXPOSE 8000
 CMD ["./main"]
